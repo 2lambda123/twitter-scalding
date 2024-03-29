@@ -1,15 +1,12 @@
 import AssemblyKeys._
 import ReleaseTransformations._
+import ScroogeSBT.autoImport._
 import com.twitter.scrooge.ScroogeSBT
-import com.typesafe.sbt.SbtScalariform._
 import com.typesafe.tools.mima.plugin.MimaKeys._
 import com.typesafe.tools.mima.plugin.MimaPlugin.mimaDefaultSettings
 import sbtassembly.Plugin._
 import scala.collection.JavaConverters._
-import scalariform.formatter.preferences._
 import scalding._
-
-import ScroogeSBT.autoImport._
 
 def scalaBinaryVersion(scalaVersion: String) = scalaVersion match {
   case version if version startsWith "2.10" => "2.10"
@@ -19,7 +16,7 @@ def scalaBinaryVersion(scalaVersion: String) = scalaVersion match {
 }
 def isScala210x(scalaVersion: String) = scalaBinaryVersion(scalaVersion) == "2.10"
 
-val algebirdVersion = "0.12.0"
+val algebirdVersion = "0.12.1"
 val apacheCommonsVersion = "2.2"
 val avroVersion = "1.7.4"
 val bijectionVersion = "0.9.1"
@@ -32,34 +29,35 @@ val hbaseVersion = "0.94.10"
 val hravenVersion = "0.9.17.t05"
 val jacksonVersion = "2.4.2"
 val json4SVersion = "3.2.11"
-val paradiseVersion = "2.0.1"
+val paradiseVersion = "2.1.0"
 val parquetVersion = "1.8.1"
 val protobufVersion = "2.4.1"
 val quasiquotesVersion = "2.0.1"
 val scalaCheckVersion = "1.12.2"
-val scalaTestVersion = "2.2.4"
+val scalaTestVersion = "2.2.6"
 val scalameterVersion = "0.6"
 val scroogeVersion = "3.20.0"
 val slf4jVersion = "1.6.6"
 val thriftVersion = "0.5.0"
 val junitVersion = "4.10"
+val macroCompatVersion = "1.1.1"
 
 val printDependencyClasspath = taskKey[Unit]("Prints location of the dependencies")
 
-val sharedSettings = Project.defaultSettings ++ assemblySettings ++ scalariformSettings ++ Seq(
+val sharedSettings = assemblySettings ++ Seq(
   organization := "com.twitter",
 
   scalaVersion := "2.11.7",
 
   crossScalaVersions := Seq("2.10.6", "2.11.7"),
 
-  ScalariformKeys.preferences := formattingPreferences,
-
   javacOptions ++= Seq("-source", "1.6", "-target", "1.6"),
 
   javacOptions in doc := Seq("-source", "1.6"),
 
   wartremoverErrors in (Compile, compile) += Wart.OptionPartial,
+
+  scalafmtConfig := Some(file(".scalafmt")),
 
   libraryDependencies ++= Seq(
     "org.mockito" % "mockito-all" % "1.8.5" % "test",
@@ -108,6 +106,12 @@ val sharedSettings = Project.defaultSettings ++ assemblySettings ++ scalariformS
       else
         Seq()
   },
+
+  /**
+   * add linter for common scala issues:
+   * https://github.com/HairyFotr/linter
+   */
+  addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.14"),
 
   // Enables full stack traces in scalatest
   testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oF"),
@@ -210,9 +214,10 @@ val sharedSettings = Project.defaultSettings ++ assemblySettings ++ scalariformS
 
 lazy val scalding = Project(
   id = "scalding",
-  base = file("."),
-  settings = sharedSettings ++ DocGen.publishSettings
-).settings(
+  base = file(".")
+)
+.settings(sharedSettings ++ DocGen.publishSettings)
+.settings(
   test := {},
   publish := {}, // skip publishing for this root project.
   publishLocal := {}
@@ -260,13 +265,6 @@ lazy val scaldingAssembly = Project(
   scaldingSerialization
 )
 
-lazy val formattingPreferences = {
-  import scalariform.formatter.preferences._
-  FormattingPreferences().
-    setPreference(AlignParameters, false).
-    setPreference(PreserveSpaceBeforeArguments, true)
-}
-
 /**
  * This returns the youngest jar we released that is compatible with
  * the current.
@@ -277,15 +275,16 @@ def youngestForwardCompatible(subProj: String) =
   Some(subProj)
     .filterNot(unreleasedModules.contains(_))
     .map {
-    s => "com.twitter" % ("scalding-" + s + "_2.10") % "0.15.0"
+    s => "com.twitter" %% (s"scalding-$s") % "0.16.0"
   }
 
 def module(name: String) = {
   val id = "scalding-%s".format(name)
-  Project(id = id, base = file(id), settings = sharedSettings ++ Seq(
-    Keys.name := id,
-    previousArtifact := youngestForwardCompatible(name))
-  )
+  Project(id = id, base = file(id))
+    .settings(sharedSettings)
+    .settings(
+      Keys.name := id,
+      previousArtifact := youngestForwardCompatible(name))
 }
 
 lazy val scaldingArgs = module("args")
@@ -395,13 +394,15 @@ lazy val scaldingParquet = module("parquet").settings(
       exclude("org.apache.parquet", "parquet-pig")
       exclude("com.twitter.elephantbird", "elephant-bird-pig")
       exclude("com.twitter.elephantbird", "elephant-bird-core"),
+    "org.scala-lang" % "scala-compiler" % scalaVersion,
     "org.apache.thrift" % "libthrift" % "0.7.0",
     "org.slf4j" % "slf4j-api" % slf4jVersion,
     "org.apache.hadoop" % "hadoop-client" % hadoopVersion % "provided",
     "org.scala-lang" % "scala-reflect" % scalaVersion,
     "com.twitter" %% "bijection-macros" % bijectionVersion,
     "com.twitter" %% "chill-bijection" % chillVersion,
-    "com.twitter.elephantbird" % "elephant-bird-core" % elephantbirdVersion % "test"
+    "com.twitter.elephantbird" % "elephant-bird-core" % elephantbirdVersion % "test",
+    "org.typelevel" %% "macro-compat" % macroCompatVersion
   ) ++ (if(isScala210x(scalaVersion)) Seq("org.scalamacros" %% "quasiquotes" % quasiquotesVersion) else Seq())
 }, addCompilerPlugin("org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full))
   .dependsOn(scaldingCore, scaldingHadoopTest % "test", scaldingParquetFixtures % "test->test")
@@ -560,9 +561,9 @@ lazy val scaldingHadoopTest = module("hadoop-test").settings(
 // This one uses a different naming convention
 lazy val maple = Project(
   id = "maple",
-  base = file("maple"),
-  settings = sharedSettings
-).settings(
+  base = file("maple")
+).settings(sharedSettings)
+  .settings(
   name := "maple",
   previousArtifact := None,
   crossPaths := false,
@@ -581,9 +582,9 @@ lazy val maple = Project(
 
 lazy val executionTutorial = Project(
   id = "execution-tutorial",
-  base = file("tutorial/execution-tutorial"),
-  settings = sharedSettings
-).settings(
+  base = file("tutorial/execution-tutorial")
+).settings(sharedSettings)
+  .settings(
   name := "execution-tutorial",
   libraryDependencies <++= (scalaVersion) { scalaVersion => Seq(
     "org.scala-lang" % "scala-library" % scalaVersion,
