@@ -210,4 +210,3 @@ class WindowLookupJoinedTest extends WordSpec with Matchers {
     }
   }
 }
-

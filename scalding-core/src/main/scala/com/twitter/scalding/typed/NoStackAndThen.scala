@@ -97,4 +97,3 @@ object NoStackAndThen {
     def apply(a: A): C = call(a, revStack)
   }
 }
-

@@ -714,4 +714,3 @@ class MacroOrderingProperties extends FunSuite with PropertyChecks with ShouldMa
     primitiveOrderedBufferSupplier[(MacroOpaqueContainer, MacroOpaqueContainer)]
   }
 }
-

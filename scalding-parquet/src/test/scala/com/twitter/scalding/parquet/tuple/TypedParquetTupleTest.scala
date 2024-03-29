@@ -83,4 +83,3 @@ class ReadWithFilterPredicateJob(args: Args) extends Job(args) {
 
   TypedPipe.from(input).map(_.a.bool).write(TypedTsv[Boolean](outputPath))
 }
-

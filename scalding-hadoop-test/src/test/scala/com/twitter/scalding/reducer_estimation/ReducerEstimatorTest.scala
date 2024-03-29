@@ -196,4 +196,3 @@ class ReducerEstimatorTest extends WordSpec with Matchers with HadoopSharedPlatf
     }
   }
 }
-

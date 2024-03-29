@@ -49,4 +49,3 @@ object CaseObjectOrderedBuf {
     }
   }
 }
-

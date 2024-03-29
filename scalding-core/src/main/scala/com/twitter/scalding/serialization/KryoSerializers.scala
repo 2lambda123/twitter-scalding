@@ -101,4 +101,3 @@ class StringFieldSerializer extends KSerializer[StringField[_]] {
     StringField[Any](id)(ord, mf)
   }
 }
-
