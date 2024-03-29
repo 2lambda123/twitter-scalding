@@ -354,7 +354,7 @@ public class ScroogeStructConverter {
   //In scrooge generated class, if a class is a union, then it must have a field called "Union"
   private boolean isUnion(Class klass) {
     for (Field f : klass.getDeclaredFields()) {
-      if (f.getName().equals("Union"))
+      if ("Union".equals(f.getName()))
         return true;
     }
     return false;
