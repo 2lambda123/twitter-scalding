@@ -37,34 +37,36 @@ You can find more example code under [examples/](https://github.com/twitter/scal
 
 ## Documentation and Getting Started
 
-* [**Getting Started**](https://github.com/twitter/scalding/wiki/Getting-Started) page on the [Scalding Wiki](https://github.com/twitter/scalding/wiki)
-* [Scalding Scaladocs](http://twitter.github.com/scalding) provide details beyond the API References. Prefer using this as it's always up to date.
-* [**REPL in Wonderland**](https://gist.github.com/johnynek/a47699caa62f4f38a3e2) a hands-on tour of the
+- [**Getting Started**](https://github.com/twitter/scalding/wiki/Getting-Started) page on the [Scalding Wiki](https://github.com/twitter/scalding/wiki)
+- [Scalding Scaladocs](http://twitter.github.com/scalding) provide details beyond the API References. Prefer using this as it's always up to date.
+- [**REPL in Wonderland**](https://gist.github.com/johnynek/a47699caa62f4f38a3e2) a hands-on tour of the
   scalding REPL requiring only git and java installed.
-* [**Runnable tutorials**](https://github.com/twitter/scalding/tree/master/tutorial) in the source.
-* The API Reference, including many example Scalding snippets:
-  * [Type-safe API Reference](https://github.com/twitter/scalding/wiki/Type-safe-api-reference)
-  * [Fields-based API Reference](https://github.com/twitter/scalding/wiki/Fields-based-API-Reference)
-* The Matrix Library provides a way of working with key-attribute-value scalding pipes:
-  * The [Introduction to Matrix Library](https://github.com/twitter/scalding/wiki/Introduction-to-Matrix-Library) contains an overview and a "getting started" example
-  * The [Matrix API Reference](https://github.com/twitter/scalding/wiki/Matrix-API-Reference) contains the Matrix Library API reference with examples
-* [**Introduction to Scalding Execution**](https://github.com/twitter/scalding/wiki/Calling-Scalding-from-inside-your-application) contains general rules and examples of calling Scalding from inside another application.
+- [**Runnable tutorials**](https://github.com/twitter/scalding/tree/master/tutorial) in the source.
+- The API Reference, including many example Scalding snippets:
+  - [Type-safe API Reference](https://github.com/twitter/scalding/wiki/Type-safe-api-reference)
+  - [Fields-based API Reference](https://github.com/twitter/scalding/wiki/Fields-based-API-Reference)
+- The Matrix Library provides a way of working with key-attribute-value scalding pipes:
+  - The [Introduction to Matrix Library](https://github.com/twitter/scalding/wiki/Introduction-to-Matrix-Library) contains an overview and a "getting started" example
+  - The [Matrix API Reference](https://github.com/twitter/scalding/wiki/Matrix-API-Reference) contains the Matrix Library API reference with examples
+- [**Introduction to Scalding Execution**](https://github.com/twitter/scalding/wiki/Calling-Scalding-from-inside-your-application) contains general rules and examples of calling Scalding from inside another application.
 
 Please feel free to use the beautiful [Scalding logo](https://drive.google.com/folderview?id=0B3i3pDi3yVgNbm9pMUdDcHFKVEk&usp=sharing) artwork anywhere.
 
 ## Code of Conduct
+
 This, and all github.com/twitter projects, are under the [Twitter Open Source Code of Conduct](https://engineering.twitter.com/opensource/code-of-conduct). Additionally, see the [Typelevel Code of Conduct](http://typelevel.org/conduct) for specific examples of harassing behavior that are not tolerated.
 
 ## Building
+
 There is a script (called sbt) in the root that loads the correct sbt version to build:
 
-1. ```./sbt update``` (takes 2 minutes or more)
-2. ```./sbt test```
-3. ```./sbt assembly``` (needed to make the jar used by the scald.rb script)
+1. `./sbt update` (takes 2 minutes or more)
+2. `./sbt test`
+3. `./sbt assembly` (needed to make the jar used by the scald.rb script)
 
 The test suite takes a while to run. When you're in sbt, here's a shortcut to run just one test:
 
-```> test-only com.twitter.scalding.FileSourceTest```
+`> test-only com.twitter.scalding.FileSourceTest`
 
 Please refer to [FAQ page](https://github.com/twitter/scalding/wiki/Frequently-asked-questions#issues-with-sbt) if you encounter problems when using sbt.
 
@@ -76,33 +78,33 @@ We use [Coveralls](https://coveralls.io/r/twitter/scalding) for code coverage re
 
 Scalding modules are available from maven central.
 
-The current groupid and version for all modules is, respectively, `"com.twitter"` and  `0.16.0-RC1`.
+The current groupid and version for all modules is, respectively, `"com.twitter"` and `0.16.0-RC1`.
 
 Current published artifacts are
 
-* `scalding-core_2.10`
-* `scalding-args_2.10`
-* `scalding-date_2.10`
-* `scalding-commons_2.10`
-* `scalding-avro_2.10`
-* `scalding-parquet_2.10`
-* `scalding-repl_2.10`
-
+- `scalding-core_2.10`
+- `scalding-args_2.10`
+- `scalding-date_2.10`
+- `scalding-commons_2.10`
+- `scalding-avro_2.10`
+- `scalding-parquet_2.10`
+- `scalding-repl_2.10`
 
 The suffix denotes the scala version.
 
 ## Adopters
 
-* Ebay
-* Etsy
-* Sharethrough
-* Snowplow Analytics
-* Soundcloud
-* Twitter
+- Ebay
+- Etsy
+- Sharethrough
+- Snowplow Analytics
+- Soundcloud
+- Twitter
 
 To see a full list of users or to add yourself, see the [wiki](https://github.com/twitter/scalding/wiki/Powered-By)
 
 ## Contact
+
 For user questions or scalding development (internals, extending, release planning):
 <https://groups.google.com/forum/#!forum/scalding-dev> (Google search also works as a first step)
 
@@ -114,34 +116,36 @@ Follow [@Scalding](http://twitter.com/scalding) on Twitter for updates.
 Chat: [![Gitter](https://badges.gitter.im/twitter/scalding.svg)](https://gitter.im/twitter/scalding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Authors:
-* Avi Bryant <http://twitter.com/avibryant>
-* Oscar Boykin <http://twitter.com/posco>
-* Argyris Zymnis <http://twitter.com/argyris>
+
+- Avi Bryant <http://twitter.com/avibryant>
+- Oscar Boykin <http://twitter.com/posco>
+- Argyris Zymnis <http://twitter.com/argyris>
 
 Thanks for assistance and contributions:
 
-* Sam Ritchie <http://twitter.com/sritchie>
-* Aaron Siegel: <http://twitter.com/asiegel>
-* Ian O'Connell <http://twitter.com/0x138>
-* Alex Levenson <http://twitter.com/THISWILLWORK>
-* Jonathan Coveney <http://twitter.com/jco>
-* Kevin Lin <http://twitter.com/reconditesea>
-* Brad Greenlee: <http://twitter.com/bgreenlee>
-* Edwin Chen <http://twitter.com/edchedch>
-* Arkajit Dey: <http://twitter.com/arkajit>
-* Krishnan Raman: <http://twitter.com/dxbydt_jasq>
-* Flavian Vasile <http://twitter.com/flavianv>
-* Chris Wensel <http://twitter.com/cwensel>
-* Ning Liang <http://twitter.com/ningliang>
-* Dmitriy Ryaboy <http://twitter.com/squarecog>
-* Dong Wang <http://twitter.com/dongwang218>
-* Josh Attenberg <http://twitter.com/jattenberg>
-* Juliet Hougland <https://twitter.com/j_houg>
-* Eddie Xie <https://twitter.com/eddiex>
+- Sam Ritchie <http://twitter.com/sritchie>
+- Aaron Siegel: <http://twitter.com/asiegel>
+- Ian O'Connell <http://twitter.com/0x138>
+- Alex Levenson <http://twitter.com/THISWILLWORK>
+- Jonathan Coveney <http://twitter.com/jco>
+- Kevin Lin <http://twitter.com/reconditesea>
+- Brad Greenlee: <http://twitter.com/bgreenlee>
+- Edwin Chen <http://twitter.com/edchedch>
+- Arkajit Dey: <http://twitter.com/arkajit>
+- Krishnan Raman: <http://twitter.com/dxbydt_jasq>
+- Flavian Vasile <http://twitter.com/flavianv>
+- Chris Wensel <http://twitter.com/cwensel>
+- Ning Liang <http://twitter.com/ningliang>
+- Dmitriy Ryaboy <http://twitter.com/squarecog>
+- Dong Wang <http://twitter.com/dongwang218>
+- Josh Attenberg <http://twitter.com/jattenberg>
+- Juliet Hougland <https://twitter.com/j_houg>
+- Eddie Xie <https://twitter.com/eddiex>
 
 A full list of [contributors](https://github.com/twitter/scalding/graphs/contributors) can be found on GitHub.
 
 ## License
+
 Copyright 2013 Twitter, Inc.
 
 Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0
