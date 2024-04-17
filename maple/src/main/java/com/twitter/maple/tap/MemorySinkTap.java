@@ -7,6 +7,7 @@ import cascading.tuple.Fields;
 import cascading.tuple.Tuple;
 import cascading.tuple.TupleEntry;
 import cascading.tuple.TupleEntryIterator;
+import java.nio.file.Files;
 import org.apache.hadoop.mapred.JobConf;
 
 import java.io.File;
@@ -30,7 +31,7 @@ public class MemorySinkTap extends Lfs {
     public static String getTempDir() {
         final File temp;
         try {
-            temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
+            temp = Files.createTempFile("temp", Long.toString(System.nanoTime())).toFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -5,6 +5,7 @@ import cascading.scheme.hadoop.SequenceFile;
 import cascading.tap.hadoop.Lfs;
 import cascading.tuple.Fields;
 import cascading.tuple.TupleEntryIterator;
+import java.nio.file.Files;
 import org.apache.hadoop.mapred.JobConf;
 
 import java.io.File;
@@ -19,7 +20,7 @@ public class StdoutTap extends Lfs {
     public static String getTempDir() {
         final File temp;
         try {
-            temp = File.createTempFile("temp", Long.toString(System.nanoTime()));
+            temp = Files.createTempFile("temp", Long.toString(System.nanoTime())).toFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
